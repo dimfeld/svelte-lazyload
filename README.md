@@ -1,6 +1,6 @@
 # svelte-lazyload
 
-This is a small component that uses an `IntersectionObserver` to delay loading some element of a page until it is coming near the viewport.
+This is a small component that uses an `IntersectionObserver` to delay loading some element of a page until it is about to enter the viewport. It exposes a property `visible` indicating if the element has been created, and also fires an event named `visible` when it loads the element.
 
 ```svelte
 <script>
@@ -16,7 +16,7 @@ This is a small component that uses an `IntersectionObserver` to delay loading s
 
 </div>
 
-<LazyLoad height="4rem" bind:visible>
+<LazyLoad height="4rem" bind:visible on:visible={() => console.log('visible!')}>
   <h1 in:fade={{duration: 2000 }}>Hello!</h1>
 </LazyLoad>
 ```
