@@ -2,7 +2,7 @@
 
 This is a small component that uses an `IntersectionObserver` to delay loading some element of a page until it is coming near the viewport.
 
-```
+```svelte
 <script>
 	import { fade } from 'svelte/transition';
 	import LazyLoad from '@dimfeld/svelte-lazyload';
