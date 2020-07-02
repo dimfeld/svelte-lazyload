@@ -4,21 +4,20 @@ This is a small component that uses an `IntersectionObserver` to delay loading s
 
 ```svelte
 <script>
-	import { fade } from 'svelte/transition';
-	import LazyLoad from '@dimfeld/svelte-lazyload';
-
-	let visible = false;
+  import { fade } from 'svelte/transition';
+  import LazyLoad from '@dimfeld/svelte-lazyload';
+  let visible = false;
 </script>
 
 <div style="position:fixed;top:0">
-	Visible: {visible}
+  Visible: {visible}
 </div>
 <div style="height:150vh">
 
 </div>
 
 <LazyLoad height="4rem" bind:visible>
-	<h1 in:fade={{duration: 2000 }}>Hello!</h1>
+  <h1 in:fade={{duration: 2000 }}>Hello!</h1>
 </LazyLoad>
 ```
 
