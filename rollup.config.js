@@ -14,7 +14,11 @@ export default {
 		{ file: pkg.main, 'format': 'umd', name }
 	],
 	plugins: [
-		svelte(),
+		svelte({
+			compilerOptions: {
+				dev: process.env.NODE_ENV === 'development',
+			}
+		}),
 		resolve()
 	]
 };
