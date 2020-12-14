@@ -6,12 +6,15 @@
     return new IntersectionObserver(
       (entries, observer) => {
         for (let entry of entries) {
-          if (entry.intersectionRatio > 0) {
-            let entryData = entryMap.get(entry.target);
-            if (entryData) {
-              entryData(entry);
-              entryMap.delete(entry.target);
-            }
+          let entryData = entryMap.get(entry.target);
+          if (!entryData) {
+            observer.unobserve(entry.target);
+            continue;
+          }
+
+          entryData.callback(entry);
+          if (entry.isIntersecting && !entryData.hideOnExit) {
+            entryMap.delete(entry.target);
             observer.unobserve(entry.target);
           }
         }
@@ -20,13 +23,13 @@
     );
   }
 
-  function listen(rootMargin, element, callback) {
+  function listen(rootMargin, element, hideOnExit, callback) {
     let observer = observers.get(rootMargin);
     if (!observer) {
       observer = makeObserver(rootMargin);
     }
 
-    entryMap.set(element, callback);
+    entryMap.set(element, { callback, hideOnExit });
     observer.observe(element);
     return () => {
       observer.unobserve(node);
@@ -42,6 +45,8 @@
   export let visible = false;
   export let height = undefined;
   export let rootMargin = "20%";
+  /** If true, hide the element again when it leaves the viewport. */
+  export let hideOnExit = false;
 
   export let id = undefined;
   export let style = undefined;
@@ -60,9 +65,13 @@
       return {};
     }
 
-    let destroy = listen(rootMargin, node, () => {
-      dispatch("visible");
-      visible = true;
+    let destroy = listen(rootMargin, node, hideOnExit, ({ isIntersecting }) => {
+      visible = isIntersecting;
+      if (isIntersecting) {
+        dispatch("visible");
+      } else if (hideOnExit) {
+        dispatch("invisible");
+      }
     });
 
     return {

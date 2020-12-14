@@ -12,6 +12,12 @@
   <h1 in:fade={{ duration: 2000 }}>Hello!</h1>
 </LazyLoad>
 
+<LazyLoad rootMargin="0px" height="4rem" hideOnExit={true}>
+  <h1 in:fade={{ duration: 2000 }}>
+    This one hides when it leaves the viewport
+  </h1>
+</LazyLoad>
+
 <LazyLoad rootMargin="0px" height="4rem">
   <h1 in:fade={{ duration: 2000 }}>Hello Again!</h1>
 </LazyLoad>
