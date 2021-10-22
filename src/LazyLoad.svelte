@@ -32,8 +32,8 @@
     entryMap.set(element, { callback, hideOnExit });
     observer.observe(element);
     return () => {
-      observer.unobserve(node);
-      entryMap.delete(node);
+      observer.unobserve(element);
+      entryMap.delete(element);
     };
   }
 </script>
